@@ -1,0 +1,58 @@
+# Query: articubot_one
+# ContextLines: 1
+
+10 results - 9 files
+
+description/ros2_control.xacro:
+  60          <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="libgz_ros2_control-system.so">
+  61:             <parameters>$(find my_robo)/config/my_controllers.yaml</parameters>
+  62:             <parameters>$(find my_robo)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
+  63          </plugin>
+
+launch/ball_tracker.launch.py:
+  12  
+  13:     my_package_name='my_robo
+  '
+  14      sim_mode = LaunchConfiguration('sim_mode')
+
+launch/joystick.launch.py:
+  11  
+  12:     joy_params = os.path.join(get_package_share_directory('my_robo
+  '),'config','joystick.yaml')
+  13  
+
+launch/launch_robot.launch.py:
+  22  
+  23:     package_name='my_robo
+  ' #<--- CHANGE ME
+  24  
+
+launch/launch_sim.launch.py:
+  20  
+  21:     package_name='my_robo
+  ' #<--- CHANGE ME
+  22  
+
+launch/localization_launch.py:
+  27      # Get the launch directory
+  28:     bringup_dir = get_package_share_directory('my_robo
+  ')
+  29  
+
+launch/navigation_launch.py:
+  30      # Get the launch directory
+  31:     bringup_dir = get_package_share_directory('my_robo
+  ')
+  32  
+
+launch/online_async_launch.py:
+  14      params_file = LaunchConfiguration('params_file')
+  15:     default_params_file = os.path.join(get_package_share_directory("my_robo
+  "),
+  16                                         'config', 'mapper_params_online_async.yaml')
+
+launch/rsp.launch.py:
+  19      # Process the URDF file
+  20:     pkg_path = os.path.join(get_package_share_directory('my_robo
+  '))
+  21      xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
