@@ -9,7 +9,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch.actions import RegisterEventHandler
 from launch.event_handlers import OnProcessStart
-
+from launch_ros.parameter_descriptions import ParameterValue, ParameterFile
 from launch_ros.actions import Node
 
 
@@ -35,18 +35,21 @@ def generate_launch_description():
     # )
 
 
-    twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
+    twist_mux_params = ParameterFile(
+        os.path.join(get_package_share_directory(package_name), 'config', 'twist_mux.yaml'),
+        allow_substs=True
+    )
     twist_mux = Node(
             package="twist_mux",
             executable="twist_mux",
             parameters=[twist_mux_params],
-            remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')]
+            remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_stamped')]
         )
 
-    
+    xacro_file = os.path.join(get_package_share_directory(package_name),'description','robot.urdf.xacro')
 
 
-    robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
+    robot_description = ParameterValue(Command(['xacro ', xacro_file]),value_type=str)
 
     controller_params_file = os.path.join(get_package_share_directory(package_name),'config','my_controllers.yaml')
 
@@ -109,6 +112,7 @@ def generate_launch_description():
         rsp,
         # joystick,
         twist_mux,
+
         delayed_controller_manager,
         delayed_diff_drive_spawner,
         delayed_joint_broad_spawner

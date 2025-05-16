@@ -1,8 +1,9 @@
 twist_mux:
   ros__parameters:
+    use_stamped: true
     topics:
       navigation:
-        topic   : cmd_vel
+        topic   : cmd_vel_stamped
         timeout : 0.5
         priority: 10
       tracker:
